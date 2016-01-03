@@ -8,7 +8,6 @@ public class Judge {
     private String username;
     private int quantily;
     private int safe;
-    private int rank;
 
     public Judge() {
     }
@@ -43,14 +42,6 @@ public class Judge {
 
     public void setSafe(int safe) {
         this.safe = safe;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
     
 }

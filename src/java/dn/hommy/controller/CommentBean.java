@@ -1,24 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+//comment + spam
+
 package dn.hommy.controller;
 
+import dn.hommy.entity.Comment;
+import dn.hommy.entity.Spam;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-/**
- *
- * @author Nguyen
- */
+
 @ManagedBean
 @SessionScoped
 public class CommentBean {
 
-    /**
-     * Creates a new instance of CommentBean
-     */
+    private Comment comment = new Comment();
+    private Spam spam = new Spam();
+    
     public CommentBean() {
     }
     

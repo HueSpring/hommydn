@@ -3,20 +3,41 @@ package dn.hommy.controller;
 import dn.hommy.dao.ManagerDao;
 import dn.hommy.entity.Manager;
 import dn.hommy.entity.Roles;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.servlet.http.Part;
 
 @ManagedBean
 @SessionScoped
 public class ManagerBean {
 
+    private static final String pathManager = "D:\\ACENTER\\hommy\\web\\resources\\default\\img\\img_managers\\";
+    private Part file;
     private Manager manager = new Manager();
     private Roles roles = new Roles();
     private String message;
+    private String passwordOld;
+    private String passwordNew1;
+    private String passwordNew2;
 
     public ManagerBean() {
+    }
+
+    //--------------------------------------------------------FIND-----------------------------------------------------------------------------------------------
+    //find all roles
+    public ArrayList<Roles> getAllRoles() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        return dao.findAllRolesDao();
+    }
+
+    //find roles by manager_username
+    public ArrayList<Roles> getRolesByUsername(String manager_username) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        return dao.findRolesByUsername(manager_username);
     }
 
     //find manager by username
@@ -25,54 +46,188 @@ public class ManagerBean {
         return dao.findManagerByUsernameDao(username);
     }
 
-    //check username - true: same
-    public boolean checkUsername(String username) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Manager item = getManagerByUsername(username);
+    //find admin
+    public ArrayList<Manager> getAdmins() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        return dao.findAllAdminsDao();
+    }
+
+    //find mod
+    public ArrayList<Manager> getMods() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        return dao.findAllModsDao();
+    }
+    //-----------------------------------------------------------------CREATE--------------------------------------------------------------------------------------
+
+    //---------------------------------------------------------------CHECK--------------------------------------------------------------------------------------
+    //check username - true: exist
+    public boolean checkUsername() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Manager item = getManagerByUsername(manager.getUsername());
         if (item.getUsername() != null) {
             return true;
         }
         return false;
     }
 
-    //create new admin - enter: username, password
-    public void createNewAdmin() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        if (checkUsername(manager.getUsername())) {
-            Date date = new Date();
-            manager.setTime_create_acc(date);
-            ManagerDao dao = new ManagerDao();
-            dao.createNewManagerShortDao(manager.getUsername(), manager.getPassword(), manager.getTime_create_acc());
-            roles.setRole("Administrator");
-            dao.createNewRolesDao(manager.getUsername(), roles.getRole(), null, null);
-        }else{
-            message = "Username has been exist";
+    //check roles -> -1: current page, 0: administrator, 1: moderator, 2: choice
+    public int checkRole() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        ArrayList<Roles> list = getRolesByUsername(manager.getUsername());
+        if (list.size() > 1) {
+            return 2;
+        }
+        if (list.size() == 1) {
+            for (Roles item : list) {
+                if (item.getRole().equalsIgnoreCase("Administrator")) {
+                    return 0;
+                }
+                if (item.getRole().equalsIgnoreCase("Moderator")) {
+                    return 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //check lenght password >= 6
+    public boolean checkLenghtPassword() {
+        if (manager.getPassword().length() >= 6) {
+            return true;
+        }
+        return false;
+    }
+
+    //check password
+    public boolean checkPassword() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Manager item = getManagerByUsername(manager.getUsername());
+        if (item.getUsername() != null && item.getPassword().equals(manager.getPassword())) {
+            return true;
+        }
+        return false;
+    }
+
+    //check value passwords not null
+    public boolean checkNotNull() {
+        if (!passwordOld.equals("") && !passwordNew1.equals("") && !passwordNew2.equals("")) {
+            return true;
+        }
+        return false;
+    }
+
+    //check passwordOld
+    public boolean checkPasswordOld() {
+        if (manager.getPassword().equals(passwordOld)) {
+            return true;
+        }
+        return false;
+    }
+
+    //check passworNew
+    public boolean checkPasswordNew() {
+        if (passwordNew1.equals(passwordNew2)) {
+            return true;
+        }
+        return false;
+    }
+
+    //mod or admin. First time login, personal infor must enter full
+    //check personal information is not full
+    public boolean checkFullInfor() {
+        if (manager.getFirstname().equals("") || manager.getLastname().equals("") || manager.getCity().equals("")
+                || manager.getEmail().equals("") || manager.getPhone().equals("") || manager.getGender().equals("")) {
+            return false;
+        }
+        return true;
+    }
+
+    //-----------------------------------------------------------UPDATE---------------------------------------------------------------------------------------------
+    //update full personal information
+    public void updateFullManager() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        dao.updateManagerNoAvatarDao(manager.getUsername(), manager.getFirstname(), manager.getLastname(), manager.getCity(),
+                manager.getGender(), manager.getPhone(), manager.getEmail());
+    }
+
+    //-----------------------------------------------------------DELETE---------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------SUPPORT---------------------------------------------------------------------------------------------
+    //
+    //------------------------------------------------------------PROCESS OTHER--------------------------------------------------------------------------------------------
+    //login
+    public String login() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        if (checkUsername() && checkPassword()) {
+            int i = checkRole();
+            if (i != -1) {
+                Manager entity = getManagerByUsername(manager.getUsername());
+                manager.setUsername(entity.getUsername());
+                manager.setFirstname(entity.getFirstname());
+                manager.setLastname(entity.getLastname());
+                manager.setAvatar(entity.getAvatar());
+                manager.setCity(entity.getCity());
+                manager.setPhone(entity.getPhone());
+                manager.setEmail(entity.getEmail());
+                manager.setTime_create_acc(entity.getTime_create_acc());
+            }
+            if (i == 0) {
+                return "admin";
+            }
+            if (i == 1) {
+                return "/moderator/mod";
+            }
+            if (i == 2) {
+                return "choiceRole";
+            }
+        }
+        return "login";
+    }
+
+    //change password
+    public void changePassword() {
+        if (checkNotNull() && checkPasswordOld() && checkPasswordNew()) {
+            if (checkLenghtPassword()) {
+                manager.setPassword(passwordNew1);
+                passwordOld = null;
+                passwordNew1 = null;
+                passwordNew2 = null;
+                message = "Change password .. SUCCESSFUL.";
+            } else {
+                message = "Password must has least 6 character.";
+            }
+        } else {
+            message = "Change password .. FAIL.";
         }
     }
 
-    //create new mod - enter: username, password & type_topic
-    public void createNewModHasTypeTopic() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        if (!checkUsername(manager.getUsername())) {
-            Date date = new Date();
-            manager.setTime_create_acc(date);
-            ManagerDao dao = new ManagerDao();
-            dao.createNewManagerShortDao(manager.getUsername(), manager.getPassword(), manager.getTime_create_acc());
-            roles.setManager_username(manager.getUsername());
-            roles.setRole("Moderator");
-            roles.setTime_create_mission(date);
-            dao.createNewRolesDao(roles.getManager_username(), roles.getRole(), roles.getType_topic() , roles.getTime_create_mission());
-            message = "success";
-        }else{
-            message = "Username has been exist";
-        }
+    //change avatar
+    public void changeAvatar() throws IOException {
+        ImageBean image = new ImageBean();
+        image.changeAvatar(file, pathManager, manager.getUsername());
     }
 
-    //check roles - true: has
-//    public boolean checkRole(){
-//        
-//    }
-    
-   
+    //change name
+    public void changeName() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        dao.updateNameDao(manager.getUsername(), manager.getFirstname(), manager.getLastname());
+    }
 
-    /*-----------------------------------------------------------------------------------------------------------------------------*/
+    //change address
+    public void changeAddress() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        dao.updateAddressDao(manager.getUsername(), manager.getCity());
+    }
+
+    //change phone
+    public void changePhone() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        dao.updatePhoneDao(manager.getUsername(), manager.getPhone());
+    }
+
+    //change email
+    public void changeEmail() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ManagerDao dao = new ManagerDao();
+        dao.updateEmailDao(manager.getUsername(), manager.getEmail());
+    }
+    /*------------------------------------------------SET & GET-----------------------------------------------------------------------------*/
+
     public Manager getManager() {
         return manager;
     }
@@ -84,8 +239,8 @@ public class ManagerBean {
     public Roles getRoles() {
         return roles;
     }
-    
-    public void setRoles(Roles roles) {    
+
+    public void setRoles(Roles roles) {
         this.roles = roles;
     }
 
@@ -201,12 +356,44 @@ public class ManagerBean {
         roles.setType_topic(type_topic);
     }
 
-    public Date getTime_create_mission() {
-        return roles.getTime_create_mission();
+    public Date getTime_create_topic() {
+        return roles.getTime_create_topic();
     }
 
-    public void setTime_create_mission(Date time_create_mission) {
-        roles.setTime_create_mission(time_create_mission);
+    public void setTime_create_mission(Date time_create_topic) {
+        roles.setTime_create_topic(time_create_topic);
+    }
+
+    public String getPasswordOld() {
+        return passwordOld;
+    }
+
+    public void setPasswordOld(String passwordOld) {
+        this.passwordOld = passwordOld;
+    }
+
+    public String getPasswordNew1() {
+        return passwordNew1;
+    }
+
+    public void setPasswordNew1(String passwordNew1) {
+        this.passwordNew1 = passwordNew1;
+    }
+
+    public String getPasswordNew2() {
+        return passwordNew2;
+    }
+
+    public void setPasswordNew2(String passwordNew2) {
+        this.passwordNew2 = passwordNew2;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
     }
 
 }

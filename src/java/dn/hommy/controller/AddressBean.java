@@ -1,25 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+//city + district + wards
 package dn.hommy.controller;
 
+import dn.hommy.dao.AddressDao;
+import dn.hommy.entity.City;
+import dn.hommy.entity.District;
+import dn.hommy.entity.Wards;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-/**
- *
- * @author Nguyen
- */
 @ManagedBean
 @SessionScoped
 public class AddressBean {
 
-    /**
-     * Creates a new instance of AddressBean
-     */
+    private City city = new City();
+    private District district = new District();
+    private Wards wards = new Wards();
+
     public AddressBean() {
     }
-    
+
+    //--------------------------------------------FIND---------------------------------------------------------------------
+    //find all cities
+    public ArrayList<City> getCities() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException{
+        AddressDao dao = new AddressDao();
+        return dao.findAllCities();
+    }
 }

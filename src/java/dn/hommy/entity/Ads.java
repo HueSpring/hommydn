@@ -17,6 +17,8 @@ public class Ads {
     private int check;
     private Date time_begin;
     private Date time_end;
+    private String username_check;
+    private Date time_check;
 
     public Ads() {
     }
@@ -107,6 +109,22 @@ public class Ads {
 
     public void setTime_end(Date time_end) {
         this.time_end = time_end;
+    }
+
+    public String getUsername_check() {
+        return username_check;
+    }
+
+    public void setUsername_check(String username_check) {
+        this.username_check = username_check;
+    }
+
+    public Date getTime_check() {
+        return time_check;
+    }
+
+    public void setTime_check(Date time_check) {
+        this.time_check = time_check;
     }
     
 }

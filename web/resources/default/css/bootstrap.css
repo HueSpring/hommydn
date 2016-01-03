@@ -4029,6 +4029,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   display: block;
 }
 .nav > li > a {
+  
   position: relative;
   display: block;
   padding: 10px 15px;
@@ -4573,7 +4574,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .disabled > a:hover,
 .navbar-default .navbar-nav > .disabled > a:focus {
   color: #ccc;
-  background-color: transparent;
+  /*background-color: transparent;*/
 }
 .navbar-default .navbar-toggle {
   border-color: #ddd;

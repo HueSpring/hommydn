@@ -9,7 +9,7 @@ public class Roles {
     private String manager_username;
     private String role;
     private String type_topic;
-    private Date time_create_mission;
+    private Date time_create_topic;
 
     public Roles() {
     }
@@ -38,12 +38,12 @@ public class Roles {
         this.type_topic = type_topic;
     }
 
-    public Date getTime_create_mission() {
-        return time_create_mission;
+    public Date getTime_create_topic() {
+        return time_create_topic;
     }
 
-    public void setTime_create_mission(Date time_create_mission) {
-        this.time_create_mission = time_create_mission;
+    public void setTime_create_topic(Date time_create_topic) {
+        this.time_create_topic = time_create_topic;
     }
 
 }

@@ -9,6 +9,7 @@ public class Clock {
     private String member_username;
     private Date time_current;
     private int step;
+    private Date time_end;
 
     public Clock() {
     }
@@ -35,6 +36,14 @@ public class Clock {
 
     public void setStep(int step) {
         this.step = step;
+    }
+
+    public Date getTime_end() {
+        return time_end;
+    }
+
+    public void setTime_end(Date time_end) {
+        this.time_end = time_end;
     }
     
 }

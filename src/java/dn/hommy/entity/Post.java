@@ -10,6 +10,7 @@ public class Post {
     private String username;
     private String type_topic;
     private String type_request;
+    private String subject;
     private String content;
     private String district;
     private String wards;
@@ -17,11 +18,14 @@ public class Post {
     private String image_1;
     private String image_2;
     private String image_3;
-    private long area;
-    private long cost;
+    private String area;
+    private String cost;
     private Date time_post;
     private int hide;
     private int check;
+    private String username_check;
+    private Date time_check;
+    private int rank;
 
     public Post() {
     }
@@ -114,19 +118,27 @@ public class Post {
         this.image_3 = image_3;
     }
 
-    public long getArea() {
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getArea() {
         return area;
     }
 
-    public void setArea(long area) {
+    public void setArea(String area) {
         this.area = area;
     }
 
-    public long getCost() {
+    public String getCost() {
         return cost;
     }
 
-    public void setCost(long cost) {
+    public void setCost(String cost) {
         this.cost = cost;
     }
 
@@ -152,6 +164,30 @@ public class Post {
 
     public void setCheck(int check) {
         this.check = check;
+    }
+
+    public String getUsername_check() {
+        return username_check;
+    }
+
+    public void setUsername_check(String username_check) {
+        this.username_check = username_check;
+    }
+
+    public Date getTime_check() {
+        return time_check;
+    }
+
+    public void setTime_check(Date time_check) {
+        this.time_check = time_check;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
     
 }

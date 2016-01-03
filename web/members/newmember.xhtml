@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            username
+            <h:inputText id="username" value="#{memberBean.username}">
+                <f:ajax execute="username" render="mes1" listener="#{memberBean.checkUsernameAjax}"/>
+            </h:inputText>
+            <h:outputText id="mes1" value="#{memberBean.messageAjax}"/>
+            
+            
+            password
+            <h:inputText id="password" value="#{memberBean.password}">
+                <f:ajax execute="password" render="mes2" listener="#{memberBean.checkPasswordAjax}"/>
+            </h:inputText>
+            <h:outputText id="mes2" value="#{memberBean.messageAjax}"/>
+            
+            firstname
+            <h:inputText value="#{memberBean.firstname}"/>
+            lastname
+            <h:inputText value="#{memberBean.lastname}"/>
+            city/province
+            <h:selectOneMenu value="#{memberBean.city}">
+                <f:selectItems value="#{addressBean.cities}" var="item" 
+                               itemValue="#{item.city_name}" itemLabel="#{item.city_name}"/>
+            </h:selectOneMenu>
+            
+            gender
+            <h:selectOneMenu value="#{memberBean.gender}">
+                <f:selectItem itemValue="Unknown" itemLabel="Unknown"/>
+                <f:selectItem itemValue="Female" itemLabel="Female"/>
+                <f:selectItem itemValue="Male" itemLabel="Male"/>
+            </h:selectOneMenu>
+            
+            phone
+            <h:inputText value="#{memberBean.phone}"/>
+            email 
+            <h:inputText value="#{memberBean.email}"/>
+            
+            <hr/>
+            <h:commandButton value="Create" action="#{memberBean.createNewMember()}"/>
+            
+            <hr/>
+            <h:outputText value="#{memberBean.message}"/>
+        </h:form>
+    </h:body>
+</html>
+

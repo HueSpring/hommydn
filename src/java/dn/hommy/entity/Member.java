@@ -14,6 +14,7 @@ public class Member {
     private String phone;
     private String email;
     private Date time_create_acc;
+    private int role_login;
 
     public Member() {
     }
@@ -96,6 +97,14 @@ public class Member {
 
     public void setTime_create_acc(Date time_create_acc) {
         this.time_create_acc = time_create_acc;
+    }
+
+    public int getRole_login() {
+        return role_login;
+    }
+
+    public void setRole_login(int role_login) {
+        this.role_login = role_login;
     }
     
 }

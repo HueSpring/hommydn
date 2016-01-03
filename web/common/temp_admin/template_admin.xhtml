@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="../../resources/custom/style_managepage.css"/>
+        <title>Facelets Template</title>
+        <link rel="stylesheet" href="../../resources/default/css/bootstrap.css"/>
+        <link rel="stylesheet" href="../../resources/default/css/bootstrap.min.css"/>
+        <script src="../../resources/default/jquery/jquery-1.11.3.min.js"/>
+        <script src="../../resources/default/js/bootstrap.min.js"/>
+        <script src="../../resources/custom/use_script.js"/>
+    </h:head>
+
+    <h:body style="background-color: #F5F5F5">
+        <h:form>
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>                        
+                        </button>
+                        <h3><a href="homeAdmin.xhtml" style="text-decoration: none">HOMMY.DN</a></h3>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-border-radius navbar-right">
+<!--                            <li>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search Blog.."/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </li>-->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 50px">
+                                    <div style="float: left; padding-right: 5px;">
+                                        <img src="../../resources/default/img/img_system/avatar_male.png"
+                                             height="40px" width="40px"/>
+                                    </div>
+                                    <div style="float: left">
+                                        <h:outputLabel value="#{managerBean.firstname}"/>
+                                        <br/>
+                                        <p style="font-size: 10px">Administrator</p>
+                                    </div>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu" style="width: 200px;">
+                                    <li>
+                                        <a href="profileAdmin.xhtml">
+                                            <span class="glyphicon glyphicon-user"></span>Profile
+                                        </a>
+                                        <a href="#" >
+                                            <span class="glyphicon glyphicon-transfer"></span>Moderator
+                                        </a>
+                                        <a href="#" >
+                                            <span class="glyphicon glyphicon-log-out"></span>Log out
+                                        </a>
+
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container-fluid" style="margin-top: 80px;">
+                <div class="row content">
+                    <div class="col-sm-3 sidenav">
+                        <ul class="nav nav-pills nav-stacked">
+
+                            <!--content-->
+
+                            <li>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                <span class="glyphicon glyphicon-th">
+                                                </span>Accounts</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse " >
+                                        <div class="panel-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-plus" style="color: gray"></span>
+                                                        <a href="../../admin/newMod.xhtml">New</a> 
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-list" style="color: gray"></span>
+                                                        <a href="#">List</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-ok " style="color: gray"></span>
+                                                        <a href="#">Device</a>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!--content-->
+
+                            <li>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                <span class="glyphicon glyphicon-file">
+                                                </span>Posts</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-usd"></span>
+                                                        <a href="#">Finance</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-user"></span>
+                                                        <a href="#">Member</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-tasks"></span>
+                                                        <a href="#">Usual reports</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!--content-->
+
+                             <li>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                <span class="glyphicon glyphicon-file">
+                                                </span>Posts</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-usd"></span>
+                                                        <a href="#">Finance</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-user"></span>
+                                                        <a href="#">Member</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-tasks"></span>
+                                                        <a href="#">Usual reports</a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!--content-->
+                            
+                            <li>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a  href="#">
+                                                <span class="glyphicon glyphicon-file">
+                                                </span>Member Reports</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <br/>
+
+                    </div>
+
+
+                    <div class="col-sm-9">
+                        <ui:insert name="content"/>
+                    </div>
+
+
+                </div>
+
+                <footer class="footer text-center" style="position: absolute; margin-top: 30px; clear: both;">
+                    <h4>Hommy.vn </h4>
+                    <h6>Trang thông tin nhà ở uy tín tin cậy </h6>
+                    <h6>Copyright © Hommy.vn  </h6>
+                </footer>  
+            </div>
+        </h:form>
+    </h:body>
+
+</html>
